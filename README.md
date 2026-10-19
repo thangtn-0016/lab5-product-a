@@ -7,10 +7,10 @@
 ## Tổng quan
 
 - **Backlog break từ:** bộ detail design **LAB-4 đã nộp ngày 2026-10-12** (37 màn, 12 nhóm tính năng F001–F012, 7 ADR, 3 flow). Bản chép nguyên nằm ở [`docs/`](docs/).
-- **PREMISE có thay đổi:** có — 1 epic mới (F000), 6 chỗ sửa thiết kế nhỏ, 3 lỗi mới, 12 giả định, 7 điểm chốt hướng; không thêm / bỏ màn nào. Nguồn: tự phát hiện khi break (chưa nhận góp ý review LAB-4). Xem [`PREMISE.md`](PREMISE.md).
+- **PREMISE có thay đổi:** có — 1 epic mới (F000), 6 chỗ sửa thiết kế, 1 chỗ sửa văn bản, 12 giả định, 7 điểm chốt hướng; không thêm / bỏ màn nào. Nguồn: tự phát hiện khi break (chưa nhận góp ý review LAB-4). Xem [`PREMISE.md`](PREMISE.md).
 - **Quy mô:** **13 epic · 117 issue · 284 sub-issue** (414 item trên Project), 44 issue mang ràng buộc đặc thù Product A, 11 issue làm rõ.
-- **Estimate:** **1.078 SWP** (sau khi người kiểm hiệu chỉnh) ≈ **205 giờ** theo velocity thật.
-- **Sprint đã chạy:** **Sprint 1** (22/09 → 05/10/2026) — chạy thật, trạng thái lấy theo commit code LAB-3: xong 183 / 227 SWP (81%). Sprint 2 (20/10 → 02/11) đã xếp 144 SWP.
+- **Estimate:** **1.075 SWP** (sau khi người kiểm hiệu chỉnh; AI model opus chấm thứ hai độc lập trên 20 việc rủi ro) ≈ **204 giờ** theo velocity thật.
+- **Sprint đã chạy:** **Sprint 1** (22/09 → 05/10/2026) — chạy thật, trạng thái lấy theo commit code LAB-3: xong 183 / 224 SWP (82%). Sprint 2 (20/10 → 02/11) đã xếp 141 SWP.
 
 ## Link
 
@@ -18,7 +18,7 @@
 |---|---|
 | Repo | https://github.com/thangtn-0016/lab5-product-a |
 | GitHub Project | https://github.com/users/thangtn-0016/projects/2 |
-| Báo cáo HTML của skill chấm SWP | [`reports/estimate-swp-lab5-product-a-20261017T160606Z.html`](reports/estimate-swp-lab5-product-a-20261017T160606Z.html) (tải về rồi mở bằng trình duyệt) |
+| Báo cáo HTML của skill chấm SWP | [`reports/estimate-swp-lab5-product-a-20261019T122037Z.html`](reports/estimate-swp-lab5-product-a-20261019T122037Z.html) (tải về rồi mở bằng trình duyệt) |
 
 ## Cấu trúc repo
 
@@ -39,17 +39,17 @@
 | Spec (LAB-4, hoặc dòng PREMISE) | Epic trên Project | Ghi chú |
 |---|---|---|
 | PREMISE **S-01** (không có spec LAB-4) · `docs/system/architecture.md`, ADR-001/002/004 | [F000 #1](https://github.com/thangtn-0016/lab5-product-a/issues/1) — Nền tảng kỹ thuật | Epic mới ở LAB-5; 5/7 issue đã Done ở Sprint 1 |
-| `docs/features/F001_AdminAndPermissions/` · SCR002–004 | [F001 #28](https://github.com/thangtn-0016/lab5-product-a/issues/28) — Quản trị tài khoản & phân quyền | Tách trách nhiệm, maker-checker (`can_approve`), MFA phân tầng |
+| `docs/features/F001_AdminAndPermissions/` · SCR002–004 · ADR-001 | [F001 #28](https://github.com/thangtn-0016/lab5-product-a/issues/28) — Quản trị tài khoản & phân quyền | **Ràng buộc đặc thù:** tách trách nhiệm (責任分離), maker-checker (`can_approve`), MFA phân tầng |
 | `docs/features/F002_ParticipantsAndQualification/` · SCR005, 006, 036 · ADR-006 · FL-03 | [F002 #64](https://github.com/thangtn-0016/lab5-product-a/issues/64) — Người tham gia & tư cách | **Ràng buộc đặc thù:** 許可 / 承認 hai luồng trạng thái riêng |
-| `docs/features/F003_LotsAndInspection/` · SCR007–009 · ADR-003 | [F003 #103](https://github.com/thangtn-0016/lab5-product-a/issues/103) — Lô hàng & đánh giá | Đánh giá chất lượng là quyết định của người; offline hẹp |
-| `docs/features/F004_TradeRecording/` · SCR010–013 · FL-01 | [F004 #138](https://github.com/thangtn-0016/lab5-product-a/issues/138) — Ghi nhận giao dịch | **Ràng buộc đặc thù:** 相対取引 là luồng chính; せり chỉ nhập tay |
-| `docs/features/F005_DeliveryTracking/` · SCR014–017 | [F005 #160](https://github.com/thangtn-0016/lab5-product-a/issues/160) — Theo dõi giao hàng | Hoàn tất ở cấp giao dịch; chứa lỗi B-01…B-04 |
-| `docs/features/F006_ReconciliationAndClosing/` · SCR018–021 · ADR-005 | [F006 #198](https://github.com/thangtn-0016/lab5-product-a/issues/198) — Đối chiếu & chốt sổ | Chốt sổ cảnh báo không chặn; chứa lỗi B-05 |
-| `docs/features/F007_PostCloseCorrection/` · SCR022–024 · FL-02 | [F007 #224](https://github.com/thangtn-0016/lab5-product-a/issues/224) — Điều chỉnh sau chốt | Lịch sử không sửa đè; một cấp duyệt |
+| `docs/features/F003_LotsAndInspection/` · SCR007–009 · ADR-003 · FL-01 | [F003 #103](https://github.com/thangtn-0016/lab5-product-a/issues/103) — Lô hàng & đánh giá | **Ràng buộc đặc thù:** đánh giá chất lượng là quyết định của người (CAP-HUMAN-01); offline hẹp |
+| `docs/features/F004_TradeRecording/` · SCR010–013 · ADR-002, 004 · FL-01 | [F004 #138](https://github.com/thangtn-0016/lab5-product-a/issues/138) — Ghi nhận giao dịch | **Ràng buộc đặc thù:** 相対取引 là luồng chính; せり chỉ nhập tay |
+| `docs/features/F005_DeliveryTracking/` · SCR014–017 · ADR-003 · FL-01 | [F005 #160](https://github.com/thangtn-0016/lab5-product-a/issues/160) — Theo dõi giao hàng | **Ràng buộc đặc thù:** hoàn tất ghi ở cấp giao dịch; quyền người nhận còn hạn cả ở khâu giao hàng; chứa lỗi B-01…B-04 |
+| `docs/features/F006_ReconciliationAndClosing/` · SCR018–021 · ADR-005 · FL-01 | [F006 #198](https://github.com/thangtn-0016/lab5-product-a/issues/198) — Đối chiếu & chốt sổ | **Ràng buộc đặc thù:** chốt sổ cảnh báo không chặn; lịch nghỉ theo từng chợ; chứa lỗi B-05 |
+| `docs/features/F007_PostCloseCorrection/` · SCR022–024 · FL-02 | [F007 #224](https://github.com/thangtn-0016/lab5-product-a/issues/224) — Điều chỉnh sau chốt | **Ràng buộc đặc thù:** lịch sử không sửa đè; một cấp duyệt (maker ≠ checker) |
 | `docs/features/F008_IncentiveAndRateVersion/` · SCR025–027 | [F008 #245](https://github.com/thangtn-0016/lab5-product-a/issues/245) — Tiền khuyến khích & phiên bản 料率 | **Ràng buộc đặc thù: 完納奨励金** (110/100, làm tròn xuống JPY, quá hạn = 0); 料率 có phiên bản, trần 4 lần / năm |
-| `docs/features/F009_ReportsAndExport/` · SCR028–030 | [F009 #286](https://github.com/thangtn-0016/lab5-product-a/issues/286) — Báo cáo & xuất dữ liệu | Báo cáo ngày xong trước 11:00 JST; kế toán CSV một chiều |
-| `docs/features/F010_Notifications/` · SCR001, 031–033, 035 | [F010 #324](https://github.com/thangtn-0016/lab5-product-a/issues/324) — Thông báo | Chỉ in-app + email; việc quan trọng trong 5 phút |
-| `docs/features/F011_AuditLog/` · SCR034 | [F011 #353](https://github.com/thangtn-0016/lab5-product-a/issues/353) — Nhật ký kiểm toán | Append-only, lưu 7 năm |
+| `docs/features/F009_ReportsAndExport/` · SCR028–030 | [F009 #286](https://github.com/thangtn-0016/lab5-product-a/issues/286) — Báo cáo & xuất dữ liệu | **Ràng buộc đặc thù:** báo cáo ngày xong trước 11:00 JST; kế toán CSV một chiều |
+| `docs/features/F010_Notifications/` · SCR001, 031–033, 035 | [F010 #324](https://github.com/thangtn-0016/lab5-product-a/issues/324) — Thông báo | **Ràng buộc đặc thù:** chỉ in-app + email; việc quan trọng trong 5 phút; offline hẹp |
+| `docs/features/F011_AuditLog/` · SCR034 | [F011 #353](https://github.com/thangtn-0016/lab5-product-a/issues/353) — Nhật ký kiểm toán | **Ràng buộc đặc thù:** ngày đã chốt không sửa trực tiếp, lần thử bị chặn phải ghi vết; append-only, lưu 7 năm |
 | `docs/features/F012_MarketManagement/` · SCR037 · ADR-007 | [F012 #381](https://github.com/thangtn-0016/lab5-product-a/issues/381) — Quản lý chợ & quy tắc | **Ràng buộc đặc thù:** quy tắc vận hành riêng từng chợ là dữ liệu có phiên bản |
 
 Chi tiết từng issue trong mỗi epic: [`task-breakdown.md`](task-breakdown.md) mục 2.

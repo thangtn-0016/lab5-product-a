@@ -1,18 +1,19 @@
 # Estimate — SWP và giờ
 
-> Product A · Người thực hiện: Trần Ngọc Thắng · 2026-10-17
+> Product A · Người thực hiện: Trần Ngọc Thắng · 2026-10-19
 
 ## 1. Báo cáo HTML của skill
 
-- Đường dẫn: [`reports/estimate-swp-lab5-product-a-20261017T160606Z.html`](reports/estimate-swp-lab5-product-a-20261017T160606Z.html) (tải về rồi mở bằng trình duyệt; file tự chứa, không gọi mạng).
-- Skill: `tkm:estimate-swp` (Takumi), nguồn = [GitHub Project](https://github.com/users/thangtn-0016/projects/2), cờ `--include-closed --no-push-kpi --level medium`.
+- Đường dẫn: [`reports/estimate-swp-lab5-product-a-20261019T122037Z.html`](reports/estimate-swp-lab5-product-a-20261019T122037Z.html) (tải về rồi mở bằng trình duyệt; file tự chứa, không gọi mạng).
+- Skill: `tkm:estimate-swp` (Takumi), nguồn = [GitHub Project](https://github.com/users/thangtn-0016/projects/2), cờ `--include-closed --reestimate-existing --no-push-kpi --level high`. Mức `high`: người chấm thứ nhất (worker sonnet) chấm cả 284 việc; người chấm thứ hai (worker opus) chấm độc lập 20 việc rủi ro để lộ chỗ hai AI lệch nhau — điểm chính thức vẫn là của người chấm thứ nhất.
 - Phạm vi chấm: **284 sub-issue** (việc lá) được chấm trực tiếp; 117 issue và 13 epic là "container", SWP = tổng con, không chấm riêng.
-- Kết quả: **967 SWP** (AI chấm) → **1.078 SWP** sau khi người kiểm hiệu chỉnh; trạng thái hiệu chỉnh `calibrated`. 20 việc độ tin cậy thấp, 0 việc đề nghị tách.
+- Kết quả: **967 SWP** (AI chấm) → **1.075 SWP** sau khi người kiểm hiệu chỉnh; trạng thái hiệu chỉnh `calibrated`. 20 việc độ tin cậy thấp, 0 việc đề nghị tách.
+- Hai AI so với nhau trên 20 việc rủi ro: 1 trùng, 1 khác nhóm, 16 lệch một nấc, 2 lệch hai nấc trở lên. Gần như mọi chỗ lệch cùng một hướng: người chấm thứ hai chấm **cao hơn** ở việc soạn câu hỏi / làm rõ (thường 3 SWP thay vì 1–2).
 - Skill chỉ đọc, không ghi lên Project. SWP và giờ trên Project là do tôi dùng AI Agent ghi sau khi đã kiểm (script ghi field `SWP`, `Giờ ước lượng` từ dữ liệu nhúng trong báo cáo HTML).
 
 ## 2. Issue mẫu đã kiểm
 
-Skill tự chọn 5 issue mẫu (nhỏ nhất, trung vị, lớn nhất, xa trung vị nhất, độ tin cậy thấp nhất). Tôi kiểm từng issue theo hai bước: chọn mức khó (rất dễ / dễ / vừa / khó / rất khó) rồi chọn điểm cụ thể; skill quy điểm đó về Scope × Complexity gần với bản AI nhất.
+Skill tự chọn 5 issue mẫu (nhỏ nhất, trung vị, lớn nhất, xa trung vị nhất, và issue hai AI lệch nhau nhiều nhất). Tôi kiểm từng issue theo hai bước: chọn mức khó (rất dễ / dễ / vừa / khó / rất khó) rồi chọn điểm cụ thể; skill quy điểm đó về Scope × Complexity gần với bản AI nhất.
 
 | Issue | Skill chấm (Scope × Complexity → SWP) | Tôi chỉnh | Lý do |
 |---|---|---|---|
@@ -20,9 +21,11 @@ Skill tự chọn 5 issue mẫu (nhỏ nhất, trung vị, lớn nhất, xa trun
 | [F008-13-a #285](https://github.com/thangtn-0016/lab5-product-a/issues/285) Seed 料率 gốc + tài khoản demo maker/checker | 2 × 1 → **3** | → 5 × 1 = **6**, **áp cho cả nhóm** (DB · feature · nhiều thành phần · có trạng thái) | AI chấm thấp các việc DB có nhiều thành phần và trạng thái: seed phải phối hợp nhiều tài khoản maker/checker, role và cờ `can_approve` (PREMISE L5-G07); cùng nhóm là migration kèm RLS kèm view. Quy tắc lan ra **20 việc cùng nhóm** (+2 nấc Scope mỗi việc) |
 | [F012-02-b #387](https://github.com/thangtn-0016/lab5-product-a/issues/387) Migration đổi PK `business_days` + cập nhật FK, RPC, view | 5 × 3 → **10** | Giữ **10** | Đồng ý với mức AI chấm (vừa, 10): chạm mọi reader / writer của ngày nghiệp vụ và khó hoàn tác |
 | [F000-02-b #8](https://github.com/thangtn-0016/lab5-product-a/issues/8) RPC nghiệp vụ lõi + trigger chặn ngày đã chốt | 5 × 3 → **10** | Giữ **10** | Đồng ý với mức AI chấm (vừa, 10). Việc này đã làm thật ở Sprint 1 |
-| [F006-03-b #206](https://github.com/thangtn-0016/lab5-product-a/issues/206) Cập nhật điều kiện cảnh báo chốt sổ theo hoàn tất cấp giao dịch | 2 × 2 → **3** | → 2 × 5 = **6**, chỉ issue này | Khó vì định nghĩa "chưa giao xong" còn phụ thuộc bản sửa B-01 / B-02 và chỗ hở spec (PREMISE S-05), không phải vì mọi RPC đều khó — không lan ra 22 việc API cùng nhóm |
+| [F008-10-a #278](https://github.com/thangtn-0016/lab5-product-a/issues/278) Soạn bộ test vector tạm + câu hỏi gửi khách (完納奨励金) | 2 × 0 → **2** (người chấm thứ hai: **3**) | Giữ **2** | Đồng ý với người chấm thứ nhất: là việc soạn tài liệu và câu hỏi, chưa có số thật để tính |
 
-Tổng thay đổi: 2 việc chỉnh riêng + 20 việc theo quy tắc nhóm + 1 việc mẫu của chính nhóm đó = **23 việc đổi điểm**, tổng **+111 SWP**.
+Tổng thay đổi: 1 việc chỉnh riêng + 20 việc theo quy tắc nhóm + 1 việc mẫu của chính nhóm đó = **22 việc đổi điểm**, tổng **+108 SWP**.
+
+Ở lần chạy mức `medium` trước đó, issue mẫu thứ năm là [F006-03-b #206](https://github.com/thangtn-0016/lab5-product-a/issues/206) (độ tin cậy thấp nhất) và tôi đã nâng 3 → 6. Ở mức `high` bộ chọn thay nó bằng #278 nên #206 quay về 3 SWP (người chấm thứ hai đưa 5) — vẫn hiện trong báo cáo HTML với nhãn hai AI lệch nhau.
 
 ## 3. Cách quy ra giờ
 
@@ -41,29 +44,31 @@ Tổng thay đổi: 2 việc chỉnh riêng + 20 việc theo quy tắc nhóm + 1
 | [F000 #1](https://github.com/thangtn-0016/lab5-product-a/issues/1) Nền tảng kỹ thuật | 7 | 19 | 76 | 14,4 | 61 SWP đã Done ở Sprint 1; còn CI và khung test (PREMISE S-01) |
 | [F001 #28](https://github.com/thangtn-0016/lab5-product-a/issues/28) Quản trị tài khoản & phân quyền | 10 | 25 | 84 | 16,0 | Có view tên người lập dùng chung cho 5 màn duyệt (S-02) |
 | [F002 #64](https://github.com/thangtn-0016/lab5-product-a/issues/64) Người tham gia & tư cách | 10 | 28 | 113 | 21,5 | Hai máy trạng thái 許可 / 承認 tách riêng (ràng buộc đặc thù) |
-| [F003 #103](https://github.com/thangtn-0016/lab5-product-a/issues/103) Lô hàng & đánh giá | 10 | 24 | 78 | 14,8 | 2 lỗi mới (S-08) |
+| [F003 #103](https://github.com/thangtn-0016/lab5-product-a/issues/103) Lô hàng & đánh giá | 10 | 24 | 78 | 14,8 | 2 bug là khoảng trống LAB-4 đã ghi trong spec, chưa có mã B-0x |
 | [F004 #138](https://github.com/thangtn-0016/lab5-product-a/issues/138) Ghi nhận giao dịch | 6 | 15 | 60 | 11,4 | 相対取引 luồng chính; 26 SWP đã Done |
 | [F005 #160](https://github.com/thangtn-0016/lab5-product-a/issues/160) Theo dõi giao hàng | 11 | 26 | 73 | 13,9 | Chứa B-01…B-04 |
-| [F006 #198](https://github.com/thangtn-0016/lab5-product-a/issues/198) Đối chiếu & chốt sổ | 8 | 17 | 61 | 11,6 | Chứa B-05 (bản vá 0042) |
+| [F006 #198](https://github.com/thangtn-0016/lab5-product-a/issues/198) Đối chiếu & chốt sổ | 8 | 17 | 58 | 11,0 | Chứa B-05 (bản vá 0042) |
 | [F007 #224](https://github.com/thangtn-0016/lab5-product-a/issues/224) Điều chỉnh sau chốt | 7 | 13 | 40 | 7,6 | Chưa làm gì |
 | [F008 #245](https://github.com/thangtn-0016/lab5-product-a/issues/245) Tiền khuyến khích & 料率 | 13 | 27 | 94 | 17,9 | **完納奨励金**; 3 issue làm rõ chặn nghiệm thu |
 | [F009 #286](https://github.com/thangtn-0016/lab5-product-a/issues/286) Báo cáo & xuất dữ liệu | 10 | 27 | 101 | 19,2 | 12 báo cáo + lô kế toán CSV |
 | [F010 #324](https://github.com/thangtn-0016/lab5-product-a/issues/324) Thông báo | 8 | 20 | 93 | 17,7 | Có hàng đợi offline dùng chung |
-| [F011 #353](https://github.com/thangtn-0016/lab5-product-a/issues/353) Nhật ký kiểm toán | 8 | 19 | 83 | 15,8 | 1 lỗi mới (S-08) |
+| [F011 #353](https://github.com/thangtn-0016/lab5-product-a/issues/353) Nhật ký kiểm toán | 8 | 19 | 83 | 15,8 | 1 bug là khoảng trống LAB-4 đã ghi trong spec, chưa có mã B-0x |
 | [F012 #381](https://github.com/thangtn-0016/lab5-product-a/issues/381) Quản lý chợ & quy tắc | 9 | 24 | 122 | 23,2 | Epic lớn nhất; đổi PK `business_days` |
-| **Tổng** | **117** | **284** | **1.078** | **204,8** | Đã Done 183 SWP · còn lại 895 SWP ≈ 170 giờ |
+| **Tổng** | **117** | **284** | **1.075** | **204,2** | Đã Done 183 SWP · còn lại 892 SWP ≈ 169,5 giờ |
+
+Lưu ý: dòng Tổng lấy 1.075 SWP × 0,19 = 204,25 → 204,2 giờ; cột "Tổng giờ" làm tròn riêng từng epic nên cộng 13 dòng ra 204,4.
 
 
 ## 5. So với estimate LAB-1
 
-LAB-1 ước bottom-up **1.210,5 MD** cho một đội nhiều vai trò, không dùng AI. LAB-5 có **1.078 SWP ≈ 205 giờ ≈ 26 MD** (8 giờ/ngày) theo velocity một người làm cùng AI. LAB-1 không ghi tầng từng màn, nên so theo khối thay vì ép về từng epic.
+LAB-1 ước bottom-up **1.210,5 MD** cho một đội nhiều vai trò, không dùng AI. LAB-5 có **1.075 SWP ≈ 204 giờ ≈ 26 MD** (8 giờ/ngày) theo velocity một người làm cùng AI. LAB-1 không ghi tầng từng màn, nên so theo khối thay vì ép về từng epic.
 
 | Phần | LAB-1 | LAB-5 | Chênh | Vì sao |
 |---|---:|---:|---:|---|
-| Chức năng: 35 màn + 15 engine / quy tắc → epic F001–F012 | 658,5 MD | 1.002 SWP ≈ 190 giờ ≈ 24 MD | −96% | (1) Giờ LAB-5 là giờ AIDD đo thật ở Sprint 1, LAB-1 là giờ đội làm thủ công; (2) LAB-1 tính QA, UX, Arch ngay trong đơn giá mỗi màn, LAB-5 chỉ tính phần có issue; (3) hệ số đo trên sprint không viết test → lạc quan (xem mục 3) |
-| Phạm vi LAB-1 không có: F012 quản lý chợ + SCR036 xét duyệt tư cách | 0 | F012 122 SWP + phần SCR036 trong F002 | thêm | LAB-4 thêm (PREMISE LAB-4 P-02, P-03) để vá lỗ hổng đề nêu; LAB-5 giữ |
+| Chức năng: 35 màn + 15 engine / quy tắc → epic F001–F011 (không tính F012, xem hàng dưới) | 658,5 MD | 877 SWP ≈ 167 giờ ≈ 21 MD | −97% | (1) Giờ LAB-5 là giờ AIDD đo thật ở Sprint 1, LAB-1 là giờ đội làm thủ công; (2) LAB-1 tính QA, UX, Arch ngay trong đơn giá mỗi màn, LAB-5 chỉ tính phần có issue; (3) hệ số đo trên sprint không viết test → lạc quan (xem mục 3) |
+| Phạm vi LAB-1 không có: F012 quản lý chợ + SCR036 xét duyệt tư cách | 0 | F012 122 SWP ≈ 23 giờ ≈ 3 MD (+ phần SCR036 nằm trong F002, đã tính ở hàng trên) | thêm | LAB-4 thêm (PREMISE LAB-4 P-02, P-03) để vá lỗ hổng đề nêu; LAB-5 giữ |
 | Hạ tầng, CI/CD, kiến trúc → F000 | 116 MD (43 + 73) | 76 SWP ≈ 14 giờ | −98% | F000 chỉ gồm việc dựng code và CI; thiết kế kiến trúc đã làm ở LAB-4 dưới dạng tài liệu, không thành issue (PREMISE S-01) |
 | Việc xuyên suốt khác: PM & giao tiếp JP, kiểm thử hệ thống / UAT, đào tạo, chuyển dữ liệu, chốt requirement, BA | 436 MD | 0 (11 issue làm rõ = 25 SWP là phần duy nhất chạm tới) | không so được | Backlog LAB-5 là backlog phát triển; các việc này không break thành issue code. Muốn báo giá phải cộng lại riêng |
 | **Tổng** | **1.210,5 MD** | **≈ 26 MD** | — | **Không dùng con số LAB-5 để báo giá.** Nó cho biết khối lượng phát triển còn lại ở tốc độ AIDD một người; LAB-1 vẫn là cơ sở báo giá cho đội thật |
 
-Điều so sánh cho thấy: phần **chức năng** co mạnh khi có AI, còn phần **xuyên suốt** (46% của LAB-1) không co theo — đó là chỗ báo giá AIDD dễ sai nhất nếu chỉ nhân giờ code.
+Điều so sánh cho thấy: phần **chức năng** co mạnh khi có AI, còn phần **xuyên suốt** (36% của LAB-1 = 436 MD; 46% nếu tính cả 116 MD hạ tầng / kiến trúc đã đi vào F000) không co theo — đó là chỗ báo giá AIDD dễ sai nhất nếu chỉ nhân giờ code.
